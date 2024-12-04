@@ -16,7 +16,10 @@ class Teacher:
         self.memory = ConversationBufferMemory()
 
         system_prompt = """
-            Make 3 questions about the following topic. Respond in spanish. You have access to the following tools:
+            You are a Havard teacher applying a oral test. 
+            Make questions about the following topic. 
+            Respond in the same language as the topic.
+            You have access to the following tools:
             
             use the following format:
             
@@ -64,7 +67,7 @@ class Teacher:
 
     def start_questioning(self, topic: str):
         agent = create_react_agent(self.llm, self.tools, self.prompt)
-        agent_executor = AgentExecutor(agent=agent, tools=self.tools, handle_parsing_errors=True, verbose=True, max_steps=3)
+        agent_executor = AgentExecutor(agent=agent, tools=self.tools, handle_parsing_errors=True, max_steps=3)
 
         return agent_executor.invoke(
             {
